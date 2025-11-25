@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberbullying Detection Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Cyberbullying Detection Tool</h1>
+
+        <!-- Input Form -->
+        <form action="/check" method="POST">
+            <textarea name="message" placeholder="Type or paste a message..." required></textarea>
+            <button type="submit">Check Message</button>
+        </form>
+
+        <!-- Clear Logs Button -->
+        <form action="/clear" method="POST" style="margin-top: 10px;">
+            <button type="submit" style="background-color: #999;">Clear Logs</button>
+        </form>
+
+        <!-- Message Log Table -->
+        {% if log %}
+        <div class="log">
+            <h2>Message Log</h2>
+            <table>
+                <tr>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                    <th>Flagged Words</th>
+                </tr>
+                {% for entry in log %}
+                <tr style="background-color: {{ entry.color }};">
+                    <td>{{ entry.message }}</td>
+                    <td>{{ entry.status }}</td>
+                    <td>{{ entry.score }}</td>
+                    <td>{{ entry.flagged|join(', ') }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
